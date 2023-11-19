@@ -29,13 +29,13 @@ export const OverviewLatestOrders = (props) => {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Bannits Ltd - WISE transactions Latest 7 Days" />
+      <CardHeader title="Bannits Ltd - WISE transactions Latest 30 Days" />
       <Scrollbar sx={{ flexGrow: 1 }}>
         <Box sx={{ minWidth: 800 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
+                <TableCell style={{minWidth: '120px'}}>
                   Date
                 </TableCell>
                 <TableCell>
@@ -44,7 +44,7 @@ export const OverviewLatestOrders = (props) => {
                 <TableCell sortDirection="desc">
                   Description/Reference 
                 </TableCell>
-                <TableCell>
+                <TableCell align='right'>
                   Amount Received
                 </TableCell>
               </TableRow>
@@ -67,7 +67,7 @@ export const OverviewLatestOrders = (props) => {
                     <TableCell>
                       {order.description}
                     </TableCell>
-                    <TableCell>
+                    <TableCell align='right'>
                       {order.amount}
                     </TableCell>
                   </TableRow>

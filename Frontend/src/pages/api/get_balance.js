@@ -1,7 +1,7 @@
 import axios from 'axios'
 import signService from '../../service/signService'
 
-const token = 'ad599a5d-5f7f-4335-b8ab-130bcbadef76';
+const token = 'aa483d4c-681b-45cf-9d98-bcc5a99d3395';
 // const profileId = 'P17073';
 const API_URL = 'https://api.transferwise.com/'
 

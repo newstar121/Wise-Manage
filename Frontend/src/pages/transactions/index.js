@@ -31,7 +31,7 @@ const Page = () => {
 
     const response = await wiseService.getBalance(startOfWeek, endOfWeek, type);
 
-    if (type == 'pdf') {
+    if ( type == 'pdf' ) {
       // create file link in browser's memory
       const href = URL.createObjectURL(response);
 
@@ -49,11 +49,11 @@ const Page = () => {
     } else {
       try {
         const orders = [];
-        response.transactions.forEach((item) => {
-
+        response.transactions.forEach((item)=>{
+          
           const details = item.details ? item.details.description : item.exchangeDetails.description;
 
-          if (item.amount.value > 0 && item.amount.value < 20000 && (!details.includes("Withdrawn"))) {
+          if ( item.amount.value > 0 && item.amount.value < 20000 && (!details.includes("Withdrawn"))) {
 
             orders.push({
               id: item.referenceNumber,
@@ -61,7 +61,7 @@ const Page = () => {
               amount: '£' + Number(item.amount.value).toLocaleString('en', {
                 minimumFractionDigits: 2
               }),
-              description: details,
+              description:  details,
               date: moment(item.date).format('DD-MM-YYYY'),
             });
           }
@@ -80,7 +80,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Transactions
+          Transactions 
         </title>
       </Head>
       <Box
@@ -93,8 +93,8 @@ const Page = () => {
         <Container maxWidth="xl">
           <Grid container>
             {/* <DatePicker label="test" /> */}
-            <Button
-              onClick={handleDownload('json')}>
+            <Button 
+                  onClick={handleDownload('json')}>
               Load Data
             </Button>
             {/* <Button variant="contained"

@@ -12,9 +12,11 @@ const {
   cartRouter,
   orderRouter,
   registerRouter,
-  balanceRouter
+  balanceRouter,
+  electricRouter,
+  charityRouter
 } = require("./routes");
-// const { connectDB, User } = require("./db");
+const { connectDB } = require("./db");
 require("dotenv").config();
 
 const app = express();
@@ -25,6 +27,8 @@ app.use(morgan("dev"));
 // app.use("/", signupRouter);
 // app.use("/", loginRouter);
 app.use("/", balanceRouter);
+app.use("/", electricRouter);
+app.use("/", charityRouter);
 // app.use("/", productRouter);
 // app.use("/", userRouter);
 // app.use("/", commentsRouter);
@@ -44,7 +48,7 @@ try {
 }
 
 const port = 4000;
-// connectDB();
+connectDB();
 
 // User.findOne({userEmail:"admin@manager.com"}).then(user=>{
 //   if ( !user ) {

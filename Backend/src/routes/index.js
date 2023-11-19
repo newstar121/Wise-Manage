@@ -9,4 +9,6 @@ module.exports = {
   ...require("./order"),
   ...require("./balance"),
   ...require("./discount-register"),
+  ...require("./electric"),
+  ...require("./charity")
 };

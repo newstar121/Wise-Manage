@@ -129,7 +129,18 @@ export const AuthProvider = (props) => {
   };
 
   const signIn = async (userEmail, password) => {
-    if (userEmail !== 'admin@manager.com' || password !== 'Password123!') {
+
+    window.localStorage.removeItem('role');
+    window.localStorage.removeItem('email');
+
+    if (userEmail === 'admin@manager.com' && password === 'Password123!') {
+      window.localStorage.setItem('role', 'admin');
+      window.localStorage.setItem('email', userEmail);
+    } else if (userEmail === 'staff@manager.com' && password === 'Password123!') {
+      window.localStorage.setItem('role', 'staff');
+      window.localStorage.setItem('email', userEmail);
+    } else {
+      
       throw new Error('Please check your email and password');
     }
 
@@ -145,7 +156,7 @@ export const AuthProvider = (props) => {
     //   }).catch(err=>{
     //     throw new Error('Please check your email and password');
     //   });
-      
+
     // } catch (err) {
     //   console.error(err);
     //   throw new Error('Please check your email and password');

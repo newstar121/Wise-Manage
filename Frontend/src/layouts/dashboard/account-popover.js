@@ -14,6 +14,8 @@ export const AccountPopover = (props) => {
       onClose?.();
       auth.signOut();
       router.push('/auth/login');
+      window.localStorage.removeItem('role');
+      window.localStorage.removeItem('email');
       window.sessionStorage.setItem('authenticated', 'false');
     },
     [onClose, auth, router]
@@ -43,7 +45,7 @@ export const AccountPopover = (props) => {
           color="text.secondary"
           variant="body2"
         >
-          Anika Visser
+          {window.localStorage.getItem('email')}
         </Typography>
       </Box>
       <Divider />
