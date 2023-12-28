@@ -1,9 +1,4 @@
 import axios from 'axios'
-import signService from '../../service/signService'
-
-const token = 'aa483d4c-681b-45cf-9d98-bcc5a99d3395';
-// const profileId = 'P17073';
-const API_URL = 'https://api.transferwise.com/'
 
 import info from '../../service/consts'
 const baseurl = `${info.SERVER_BASE}/ott?ott=`
@@ -45,7 +40,7 @@ const getBalances = async () => {
                 const currency = balance.currency;
 
                 result.push({
-                    fullName:  profile.fullName,
+                    fullName: profile.fullName,
                     profileId: profileId,
                     balanceId: balanceId,
                     currency: currency,
@@ -74,7 +69,7 @@ const getBalances = async () => {
                 const currency = balance.currency;
 
                 result.push({
-                    fullName:  profile.fullName,
+                    fullName: profile.fullName,
                     profileId: profileId,
                     balanceId: balanceId,
                     currency: currency,

@@ -7,7 +7,7 @@ const getCharity = async (option) => {
 
     try {
 
-        const result = await axios.get(baseurl + `/charity?page_num=${option.page_num}&page_count=${option.page_count}&search=${option.search}&isNew=${option.isNew}&reg_charity_number=${option.reg_charity_number}&charity_name=${option.charity_name}&reg_status=${option.reg_status}&income=${option.income}&reporting=${option.reporting}`);
+        const result = await axios.get(baseurl + `/charity?page_num=${option.page_num}&page_count=${option.page_count}&search=${option.search}&isNew=${option.isNew}&reg_charity_number=${option.reg_charity_number}&charity_name=${option.charity_name}&reg_status=${option.reg_status}&income=${option.income}&reporting=${option.reporting}&date_of_registration=${option.date_of_registration}`);
         return result.data || null;
 
     } catch (error) {

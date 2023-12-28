@@ -174,6 +174,10 @@ charityRouter.get("/api/charity", async (req, res) => {
             sort.reporting = req.query.reporting || null;
         }
 
+        if (req.query.date_of_registration && req.query.date_of_registration != 'undefined') {
+            sort.date_of_registration = req.query.date_of_registration || null;
+        }
+
 
         if (page_num < 0 || !page_num) page_num = 0;
         if (page_count < 1 || !page_count) page_count = 50;

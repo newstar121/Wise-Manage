@@ -26,7 +26,9 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 import debounce from "lodash/debounce";
-import { Label } from '@mui/icons-material';
+import { useRouter } from 'next/router';
+import { getYear } from 'date-fns';
+import moment from 'moment';
 
 export const CharityTable = (props) => {
 
@@ -138,6 +140,18 @@ export const CharityTable = (props) => {
 
     }
 
+    const router = useRouter();
+
+    const handleClick = (data) => {
+
+        const reg_charity_number = parseInt(data.reg_charity_number);
+        const group_subsid_suffix = data.group_subsid_suffix;
+
+        // router.push('/charity/detail/[reg_charity_number]/[group_subsid_suffix]', `/charity/charityDetail/${reg_charity_number}/${group_subsid_suffix}`);
+        router.push({ pathname: '/charity/detail/', query: { reg_charity_number: reg_charity_number, group_subsid_suffix: group_subsid_suffix } });
+
+    }
+
     return (
         <Card sx={sx} style={{ paddingTop: 0, paddingBottom: 0 }} >
             <CardHeader title="Charities Search" />
@@ -190,12 +204,16 @@ export const CharityTable = (props) => {
                                         <TableCell style={{ "cursor": "pointer", width: '400px' }} onClick={() => handleSort('charity_name')}>
                                             Charity name
                                         </TableCell>
+                                        <TableCell style={{ "cursor": "pointer", width: '130px' }} onClick={() => handleSort('date_of_registration')}>
+                                            Register Date
+                                        </TableCell>
                                         <TableCell style={{ "cursor": "pointer", width: '130px' }} onClick={() => handleSort('reg_status')}>
                                             Status
                                         </TableCell>
                                         <TableCell style={{ "cursor": "pointer", width: '130px' }} onClick={() => handleSort('income')}>
                                             Income
                                         </TableCell>
+
                                         <TableCell style={{ "cursor": "pointer", width: '200px' }} onClick={() => handleSort('reporting')}>
                                             Reporting
                                         </TableCell>
@@ -208,12 +226,17 @@ export const CharityTable = (props) => {
                                             <TableRow
                                                 hover
                                                 key={index}
+                                                onClick={() => handleClick(row)}
+                                                style={{ cursor: 'pointer' }}
                                             >
                                                 <TableCell>
                                                     {row.reg_charity_number}
                                                 </TableCell>
                                                 <TableCell>
                                                     {row.charity_name}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {moment(new Date(row.date_of_registration) || new Date()).format('YYYY-MM-DD')}
                                                 </TableCell>
                                                 <TableCell>
                                                     {row.reg_status == 'R' ? 'Registered' : 'Removed'}

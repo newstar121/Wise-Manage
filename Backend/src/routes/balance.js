@@ -31,7 +31,38 @@ async function GetBalance(startDay, endDay, type) {
     );
 
     const profiles = profileResult.data || [];
+    
+    // let bankAccount = [];
+    // for (let i = 0; i < profiles.length; i++) {
 
+    //     const profile = profiles[i];
+    //     const profileId = profile.id;
+
+    //     try {
+
+    //         /**
+    //          * GET BANK ACCOUNT DETAILS
+    //          */
+    //         const accountResult = await axios.get(API_URL + `/v1/profiles/${profileId}/account-details`,
+    //             {
+    //                 headers: {
+    //                     Authorization: 'Bearer ' + API_KEY
+    //                 }
+    //             }
+    //         );
+
+    //         const accounts = accountResult.data;
+    //         bankAccount = bankAccount.concat(accounts);
+
+    //     } catch (error) {
+    //         // console.error(error);
+    //     }
+
+    // }
+    
+    // if(bankAccount.length == 0) {
+    //     return result;
+    // }
 
     for (let i = 0; i < profiles.length; i++) {
 

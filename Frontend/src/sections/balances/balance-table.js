@@ -40,7 +40,7 @@ export const BalanceTable = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {balances.map((balance, index) => {
+                            {(balances || []).map((balance, index) => {
 
                                 return (
                                     <TableRow

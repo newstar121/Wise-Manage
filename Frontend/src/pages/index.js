@@ -49,7 +49,7 @@ const Page = () => {
     } else {
       try {
         const orders = [];
-        response.transactions.forEach((item) => {
+        (Array.isArray(response?.transactions) ? response.transactions : []).forEach((item) => {
 
           const details = item.details ? item.details.description : item.exchangeDetails.description;
 
@@ -95,7 +95,7 @@ const Page = () => {
             {/* <DatePicker label="test" /> */}
             <Button
               onClick={handleDownload('json')}>
-              Load Data
+              Load Transactions
             </Button>
             {/* <Button variant="contained"
                   onClick={handleDownload('pdf')}>

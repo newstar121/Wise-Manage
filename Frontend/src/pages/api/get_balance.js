@@ -1,7 +1,7 @@
 import axios from 'axios'
 import signService from '../../service/signService'
 
-const token = 'aa483d4c-681b-45cf-9d98-bcc5a99d3395';
+const token = '68659ea0-b390-4d9a-90e5-32caefbf5c77';
 // const profileId = 'P17073';
 const API_URL = 'https://api.transferwise.com/'
 
@@ -9,7 +9,7 @@ import info from '../../service/consts'
 const baseurl = `${info.SERVER_BASE}/ott?ott=`
 
 const getBalance = async (startDay, endDay, type) => {
-    
+
     let totalBalance = {};
 
     const profileResult = await axios.get(API_URL + 'v2/profiles',
@@ -21,7 +21,39 @@ const getBalance = async (startDay, endDay, type) => {
     );
 
     const profiles = profileResult.data || [];
-    
+
+    let bankAccount = [];
+    for (let i = 0; i < profiles.length; i++) {
+
+        const profile = profiles[i];
+        const profileId = profile.id;
+
+        try {
+
+            /**
+             * GET BANK ACCOUNT DETAILS
+             */
+            const accountResult = await axios.get(API_URL + `/v1/profiles/${profileId}/account-details`,
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + API_KEY
+                    }
+                }
+            );
+
+            const accounts = accountResult.data;
+            bankAccount = bankAccount.concat(accounts);
+
+        } catch (error) {
+            // console.error(error);
+        }
+
+    }
+
+    if (bankAccount.length == 0) {
+        return [];
+    }
+
     for (let i = 0; i < profiles.length; i++) {
 
         const profile = profiles[i];
@@ -62,19 +94,19 @@ const getBalance = async (startDay, endDay, type) => {
                         }
                     }
                 );
-                
+
             } catch (error) {
-                
+
                 const pendingHistoryResult = error.response;
-                
+
                 if (pendingHistoryResult?.headers['x-2fa-approval-result'] == 'REJECTED') {
 
                     const OTT = pendingHistoryResult?.headers['x-2fa-approval'] || '';
 
                     // const {status, signature} = await signService.getSignature(OTT);
                     const response = await axios.get(baseurl + OTT);
-                    console.log("Response = " , response.data.status);
-                    
+                    console.log("Response = ", response.data.status);
+
                     if (!response.data.status) {
                         continue;
                     }
@@ -83,12 +115,12 @@ const getBalance = async (startDay, endDay, type) => {
 
                     console.log("OTT = ", OTT);
                     console.log("signature = ", signature);
-                    
+
                     try {
-                        
+
                         const response = await axios.get(url,
                             {
-                                responseType:  type == 'pdf' ? "arraybuffer" : 'json',
+                                responseType: type == 'pdf' ? "arraybuffer" : 'json',
                                 responseEncoding: type == 'pdf' ? "binary" : undefined,
                                 headers: {
                                     'Authorization': 'Bearer ' + token,
@@ -99,7 +131,7 @@ const getBalance = async (startDay, endDay, type) => {
                             }
                         );
 
-                        
+
 
                         return response.data;
 
@@ -112,17 +144,17 @@ const getBalance = async (startDay, endDay, type) => {
         }
 
     }
-    
+
 }
 
 export default async function handler(req, res) {
-    try{
-       const response = await getBalance(req.query.startDay, req.query.endDay, req.query.type);
-       if ( response === false ) {
+    try {
+        const response = await getBalance(req.query.startDay, req.query.endDay, req.query.type);
+        if (response === false) {
             return res.status(500).end("WiseApi Error")
-       } else {
+        } else {
             res.status(200).json(response)
-       }
+        }
     } catch (error) {
         console.error(error)
         return res.status(error.status || 500).end(error.message)
